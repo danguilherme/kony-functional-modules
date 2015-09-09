@@ -1,0 +1,19 @@
+{
+  "name": "kony-functional-modules",
+  "version": "0.0.1",
+  "description": "Easily manage and configure Kony's Functional Modules",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kony",
+    "functional-module",
+    "mobile-development"
+  ],
+  "author": "danguilherme",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-prebuilt": "^0.32.1"
+  }
+}
