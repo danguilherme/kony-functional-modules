@@ -3,34 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title>Olá Mundo!</title>
+
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="node_modules/angular/angular.js"></script>
+
     <style>
-    body {
-      background-color: #222;
-      color:#fff;
-    }
-    .container-full {
-      padding-top: 10%;
-      background-color: transparent;
-    }
+      body {
+        background-color: #222;
+        color:#fff;
+      }
+      .container-full {
+        padding-top: 10%;
+        background-color: transparent;
+      }
     </style>
   </head>
 
-  <body>
+  <body ng-app="FunctionalModulesBuilder">
 
-    <main class="container-full jumbotron">
-      <div>
-        <div class="col-lg-12 text-center">
-          <h1>Olá mundo!</h1>
-          <small>
-            io.js <script>document.write(process.version)</script><br>
-            Electron v<script>document.write(process.versions['electron'])</script><br>
-            Platform <script>document.write(process.platform)</script>
-          </small>
-        </div>
+    <main class="container" ng-controller="MainController">
+      <div class="row col-xs-12">
+        <pre>{{ modules | json }}</pre>
       </div>
     </main>
 
-    <script type="text/javascript" src="page.js"></script>
+    <footer>
+      io.js <script>document.write(process.version)</script> | 
+      Electron v<script>document.write(process.versions['electron'])</script> | 
+      Platform <script>document.write(process.platform)</script>
+    </footer>
+
+    <script src="app/app.js"></script>
+    <script src="app/controllers/MainController.js"></script>
   </body>
 </html>

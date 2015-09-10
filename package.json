@@ -17,6 +17,7 @@
     "electron-prebuilt": "^0.32.1"
   },
   "dependencies": {
+    "angular": "^1.4.5",
     "xmldom": "^0.1.19"
   }
 }

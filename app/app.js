@@ -1,0 +1,1 @@
+var FunctionalModulesBuilder = angular.module('FunctionalModulesBuilder', []);
