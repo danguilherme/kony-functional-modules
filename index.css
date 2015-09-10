@@ -1,0 +1,13 @@
+body {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.container-full {
+  padding-top: 10%;
+  background-color: transparent;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
