@@ -1,0 +1,23 @@
+<!--/**
+views : list of ids of forms, popups, templates (seg,datagrid, header, footer... etc)  - Optional
+jsModules : js modules required for this functional module, - Optional
+dependentModules : Other functional modules required for this module. - Optional
+
+Either forms or modules should be provided for a module.
+**/-->
+<functionalModules projectName="Marvel"  xmlns="a" xmlns:c="./lite">
+    <functionalModule name="startup" loadOnStartUp="true">
+    	<views>frmMain</views>
+        <jsModules>vizActions_IDE,frmMainView</jsModules>
+    </functionalModule>
+    
+    <functionalModule name="comics">
+    	<views>tmplComics,frmComics</views>
+        <jsModules>frmComicsView</jsModules>
+    </functionalModule>
+    
+    <functionalModule name="characters">
+    	<views>tmplCharacterItem,frmCharacters</views>
+        <jsModules>frmCharactersView</jsModules>
+    </functionalModule>
+</functionalModules>

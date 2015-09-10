@@ -29,7 +29,7 @@ app.on('ready', function() {
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Open the devtools.
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -38,4 +38,33 @@ app.on('ready', function() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+
+
+
+
+
+
+
+
+
+  var FunctionalModule = require('./FunctionalModule');
+
+  var fs = require('fs');
+  var xmldom = require('xmldom');
+  var DOMParser = xmldom.DOMParser;
+
+  fs.readFile(__dirname + '/test/functionalModules.xml', 'utf8', function (err, data) {
+    if (err) throw err;
+
+    var doc = new DOMParser().parseFromString(data, 'text/xml');
+    // doc.documentElement.setAttribute('x','y');
+    // doc.documentElement.setAttributeNS('./lite','c:x','y2');
+    // var nsAttr = doc.documentElement.getAttributeNS('./lite','x')
+    // console.info(nsAttr)
+    // console.info(doc)
+  });
+
+  function getModules(documentElement) {
+  }
 });
