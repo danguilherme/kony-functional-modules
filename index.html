@@ -4,24 +4,72 @@
     <meta charset="utf-8">
     <title>Olá Mundo!</title>
 
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <script src="node_modules/angular/angular.js"></script>
-
-    <style>
-      body {
-        background-color: #222;
-        color:#fff;
-      }
-      .container-full {
-        padding-top: 10%;
-        background-color: transparent;
-      }
-    </style>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
   </head>
 
   <body ng-app="FunctionalModulesBuilder">
+    <h1>Functional Modules File Builder</h1>
 
     <main class="container" ng-controller="MainController">
+
+      <div class="row">
+        <nav class="col-xs-4 modules">
+          <h2>Modules</h2>
+
+          <div class="list-group">
+            <button
+              ng-repeat="module in modules"
+              type="button"
+              class="list-group-item"
+              ng-click="selectModule(module)">{{module.name}}</button>
+          </div>
+        </nav>
+
+        <div class="col-xs-8">
+          <h1>Module Info</h1>
+          
+          <div class="module-info" ng-show="selectedModule">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="moduleName" class="col-sm-4 control-label">Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="moduleName" placeholder="Module Name"
+                    ng-model="selectedModule.name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">{{selectedModule.views.length}} Views</label>
+                <div class="col-sm-8">
+                  <ul>
+                    <li class="form-control-static" ng-repeat="view in selectedModule.views">{{view}}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">{{selectedModule.jsModules.length}} JS Modules</label>
+                <div class="col-sm-8">
+                  <ul>
+                    <li class="form-control-static" ng-repeat="view in selectedModule.jsModules">{{view}}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">{{selectedModule.dependentModules.length}} Dependencies</label>
+                <div class="col-sm-8">
+                  <ul>
+                    <li class="form-control-static" ng-repeat="view in selectedModule.dependentModules">{{view}}</li>
+                  </ul>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <button type="button" class="pull-right btn btn-primary" ng-click="save()">Save</button>
+      </div>
+
+      <hr>
       <div class="row col-xs-12">
         <pre>{{ modules | json }}</pre>
       </div>
@@ -33,7 +81,11 @@
       Platform <script>document.write(process.platform)</script>
     </footer>
 
+    <!-- ANGULAR -->
+    <script src="node_modules/angular/angular.js"></script>
+    <!-- APP -->
     <script src="app/app.js"></script>
+    <!-- CONTROLLERS -->
     <script src="app/controllers/MainController.js"></script>
   </body>
 </html>
