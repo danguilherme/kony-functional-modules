@@ -44,6 +44,28 @@ FunctionalModule.loadModule = function loadModuleFromXmlElement(xmlElement) {
 }
 
 /* METHODS */
+FunctionalModule.prototype.toXMLNode = function() {
+  var dom = new DOMParser().parseFromString('<functionalModule/>');
+  var doc = dom.documentElement;
+  doc.setAttribute('name', this.name);
+  doc.setAttribute('loadOnStartUp', this.loadOnStartup);
+
+  var appendIdentifierListNode = (ids, nodeName) => {
+    if (ids && ids.length) {
+      var node = dom.createElement(nodeName);
+      var text = dom.createTextNode(ids.join(','));
+      node.appendChild(text);
+      doc.appendChild(node);
+    };
+  }
+
+  appendIdentifierListNode(this.jsModules, 'jsModules');
+  appendIdentifierListNode(this.views, 'views');
+  appendIdentifierListNode(this.dependentModules, 'dependentModules');
+
+  return new xmldom.XMLSerializer().serializeToString(doc);
+};
+
 FunctionalModule.prototype.toString = function() {
   return this.name;
 };
