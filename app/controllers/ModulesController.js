@@ -25,6 +25,11 @@ angular.module('FunctionalModulesBuilder')
         selectModule(name);
       }
 
-      $scope.modules = Workspace.getFunctionalModulesXml();
+      try {
+        $scope.modules = Workspace.getFunctionalModulesXml();
+      } catch (e) {
+        console.warn("Working directory is not set, loading test xml file");
+        $scope.modules = FileHelper.parseFunctionalModulesXml(__dirname + '/test/functionalModules.xml');
+      }
     }
   ]);

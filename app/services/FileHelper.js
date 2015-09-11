@@ -70,9 +70,7 @@ angular.module('FunctionalModulesBuilder')
       var DOMParser = require('xmldom').DOMParser;
 
       var content = readFile(location, 'utf8');
-
-      console.info(location, content);
-
+      
       var doc = new DOMParser().parseFromString(content, 'text/xml');
       var functionalModules = FunctionalModule.loadModules(doc.documentElement);
 
