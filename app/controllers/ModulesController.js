@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('FunctionalModulesBuilder').
-  controller('ModulesController', ['$scope', function ModulesController($scope) {
+  controller('ModulesController', ['$scope', 'FileHelper', function ModulesController($scope, FileHelper) {
     $scope.modules;
     $scope.selectedModule;
 
@@ -24,23 +24,5 @@ angular.module('FunctionalModulesBuilder').
       selectModule(name);
     }
 
-    var fs = require('fs');
-    var FunctionalModule = require('./FunctionalModule');
-    var data = fs.readFileSync(__dirname + '/test/functionalModules.xml', 'utf8');
-
-    var doc = new DOMParser().parseFromString(data, 'text/xml');
-
-    var functionalModules = FunctionalModule.loadModules(doc.documentElement);
-    $scope.modules = functionalModules;
-
-    // fs.readFile(__dirname + '/test/functionalModules.xml', 'utf8', function (err, data) {
-    //   if (err) throw err;
-
-    //   var doc = new DOMParser().parseFromString(data, 'text/xml');
-
-    //   var fms = FunctionalModule.loadModules(doc.documentElement);
-    //   console.log(fms);
-    //   $scope.modules = fms;
-    //   $scope.$apply();
-    // });
+    $scope.modules = FileHelper.parseFunctionalModulesXml(__dirname + '/test/functionalModules.xml');
   }]);
