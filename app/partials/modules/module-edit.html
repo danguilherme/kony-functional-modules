@@ -1,0 +1,46 @@
+<div class="module-info">
+  <h1>Module Info</h1>
+
+  <div ng-show="selectedModule">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="moduleName" class="col-sm-4 control-label">Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="moduleName" placeholder="Module Name"
+            ng-model="selectedModule.name"
+            required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">{{selectedModule.views.length}} Views</label>
+        <div class="col-sm-8">
+          <ul class="form-control-static">
+            <li ng-repeat="view in selectedModule.views">{{view}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">{{selectedModule.jsModules.length}} JS Modules</label>
+        <div class="col-sm-8">
+          <ul class="form-control-static">
+            <li ng-repeat="jsFileName in selectedModule.jsModules">{{jsFileName}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">{{selectedModule.dependentModules.length}} Dependencies</label>
+        <div class="col-sm-8">
+          <ul class="form-control-static">
+            <li ng-repeat="dependentModule in selectedModule.dependentModules">
+              <a href="#"
+                title="Show Module Info"
+                ng-click="selectDependentModule(dependentModule)">{{dependentModule}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <pre>{{selectedModule.toXMLNode()}}</pre>
+</div>

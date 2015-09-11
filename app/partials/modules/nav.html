@@ -1,0 +1,12 @@
+<nav class="modules">
+  <h2>Modules</h2>
+
+  <div class="list-group">
+    <button
+      ng-repeat="module in modules"
+      type="button"
+      class="list-group-item"
+      ng-click="selectModule(module)"
+      ng-class="{ active: selectedModule.name == module.name }">{{module.loadOnStartup ? '&bull;' : ''}} {{module.name}}</button>
+  </div>
+</nav>

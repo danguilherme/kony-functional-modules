@@ -1,12 +1,27 @@
 'use strict';
 
 angular.module('FunctionalModulesBuilder').
-  controller('MainController', ['$scope', function MainController($scope) {
+  controller('ModulesController', ['$scope', function ModulesController($scope) {
     $scope.modules;
     $scope.selectedModule;
 
+    function getModuleByName(name) {
+      return $scope.modules.filter(mod => mod.name === name)[0];
+    }
+
+    function selectModule(module) {
+      if (typeof(module) === 'string')
+        module = getModuleByName(module);
+
+      $scope.selectedModule = module;
+    }
+
     $scope.selectModule = function(module) {
-      $scope.selectedModule = angular.copy(module);
+      selectModule(module);
+    }
+
+    $scope.selectDependentModule = function(name) {
+      selectModule(name);
     }
 
     var fs = require('fs');
