@@ -7,7 +7,7 @@ Either forms or modules should be provided for a module.
 **/-->
 <functionalModules projectName="Marvel">
     <functionalModule name="startup" loadOnStartUp="true">
-    	<views>frmMain</views>
+    	<views>frmMain,frmwow</views>
       <jsModules>vizActions_IDE,mod_mvc,frmMainView</jsModules>
       <dependentModules>services</dependentModules>
     </functionalModule>

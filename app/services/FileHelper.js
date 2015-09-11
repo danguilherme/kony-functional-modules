@@ -21,6 +21,15 @@ angular.module('FunctionalModulesBuilder')
       });
     }
 
+    function fileInfo(location) {
+      // https://nodejs.org/api/fs.html#fs_class_fs_stats
+      return fs.statSync(location);
+    }
+
+    function readDirectory(path) {
+      return fs.readdirSync(path);
+    }
+
     function readFile(location, config) {
       return fs.readFileSync(location, config);
     }
@@ -30,7 +39,7 @@ angular.module('FunctionalModulesBuilder')
       if (!path) return false;
       path = path[0];
 
-      var allFiles = fs.readdirSync(path);
+      var allFiles = readDirectory(path);
       if (allFiles.indexOf('.project') > -1)
         return path; // it's an Eclipse project!
 
@@ -61,6 +70,9 @@ angular.module('FunctionalModulesBuilder')
       var DOMParser = require('xmldom').DOMParser;
 
       var content = readFile(location, 'utf8');
+
+      console.info(location, content);
+
       var doc = new DOMParser().parseFromString(content, 'text/xml');
       var functionalModules = FunctionalModule.loadModules(doc.documentElement);
 
@@ -69,9 +81,14 @@ angular.module('FunctionalModulesBuilder')
 
     return {
       chooseSingleFileOrDirectory: chooseSingleFileOrDirectory,
+
+      readDirectory: readDirectory,
       readFile: readFile,
+
       parseFunctionalModulesXml: parseFunctionalModulesXml,
 
-      chooseEclipseProjectFolder: chooseEclipseProjectFolder
+      chooseEclipseProjectFolder: chooseEclipseProjectFolder,
+
+      fileInfo: fileInfo
     }
   }]);

@@ -1,20 +1,29 @@
 'use strict';
 
 angular.module('FunctionalModulesBuilder')
-  .controller('HomeController', ['$scope', 'FileHelper', function HomeController($scope, FileHelper) {
-    function showOpenDialog() {
-      var remote = require('remote');
-      var dialog = remote.require('dialog');
+  .controller('HomeController', ['$scope', '$state', 'FileHelper', 'Workspace',
+    function HomeController($scope, $state, FileHelper, Workspace) {
+      function showOpenDialog() {
+        var remote = require('remote');
+        var dialog = remote.require('dialog');
 
-      var path = null;
+        var path = null;
 
-      //path = FileHelper.chooseSingleFileOrDirectory();
-      path = FileHelper.chooseEclipseProjectFolder();
+        //path = FileHelper.chooseSingleFileOrDirectory();
+        path = FileHelper.chooseEclipseProjectFolder();
 
-      console.log(path);
+        if (path) {
+          Workspace.setWorkingDirectory(path);
+
+          console.log("Eclipse project path: ", path);
+          console.log("Modules: ", Workspace.listModules());
+
+          $state.go('modules');
+        }
+      }
+
+      $scope.openFile = function() {
+        showOpenDialog();
+      }
     }
-
-    $scope.openFile = function() {
-      showOpenDialog();
-    }
-  }]);
+  ]);

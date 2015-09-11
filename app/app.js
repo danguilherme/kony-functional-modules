@@ -1,4 +1,4 @@
-var FunctionalModulesBuilder = angular.module('FunctionalModulesBuilder', ['ui.router']);
+var FunctionalModulesBuilder = angular.module('FunctionalModulesBuilder', ['ui.router', 'ngStorage']);
 
 FunctionalModulesBuilder.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
