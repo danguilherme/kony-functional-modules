@@ -3,6 +3,9 @@
 angular.module('FunctionalModulesBuilder')
   .controller('ModulesController', ['$scope', 'FileHelper', 'Workspace',
     function ModulesController($scope, FileHelper, Workspace) {
+      // TODO: Check CodeMirror
+      var pd = require('pretty-data').pd;
+
       $scope.modules;
       $scope.selectedModule;
 
@@ -15,6 +18,7 @@ angular.module('FunctionalModulesBuilder')
           module = getModuleByName(module);
 
         $scope.selectedModule = module;
+        $scope.xml = pd.xml($scope.selectedModule.toXMLNode());
       }
 
       $scope.selectModule = function(module) {
