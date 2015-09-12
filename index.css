@@ -12,6 +12,10 @@ h2 {
   text-align: center;
 }
 
+.list-group-compact .list-group-item {
+  padding: 5px 7px;
+}
+
 footer {
   text-align: center;
 }

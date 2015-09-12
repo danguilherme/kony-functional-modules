@@ -16,7 +16,8 @@ angular.module('FunctionalModulesBuilder')
           Workspace.setWorkingDirectory(path);
 
           console.log("Eclipse project path: ", path);
-          console.log("Modules: ", Workspace.listModules());
+          console.log("Scripts: ", Workspace.getScripts());
+          console.log("Forms: ", Workspace.getForms());
 
           $state.go('modules');
         }

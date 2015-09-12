@@ -6,11 +6,44 @@ angular.module('FunctionalModulesBuilder')
       // TODO: Check CodeMirror
       var pd = require('pretty-data').pd;
 
-      $scope.modules;
-      $scope.selectedModule;
+      $scope.functionalModules;
+      $scope.selectedModule = {};
+
+      function load() {
+        try {
+          $scope.functionalModules = Workspace.getFunctionalModulesXml();
+
+          $scope.allModules = $scope.functionalModules.map(o => o.name);
+          $scope.allScripts = Workspace.getScripts();
+          $scope.allForms = Workspace.getForms();
+
+          // scripts that are at least in one functional module
+          $scope.referencedScripts = $scope.functionalModules
+            .map(x => x.jsModules)
+            .reduce((x, y) => x.concat(y), []);
+
+          // views that are at least in one functional module
+          $scope.referencedForms = $scope.functionalModules
+            .map(x => x.views)
+            .reduce((x, y) => x.concat(y), []);
+
+          console.info('FunctionalModules', $scope.functionalModules);
+          console.info('FunctionalModules names', $scope.allModules);
+          console.info('Scripts', $scope.allScripts);
+          console.log($scope.referencedScripts);
+          console.info('Views', $scope.allForms);
+        } catch (e) {
+          console.warn(e.message);
+
+          // var shell = require('shell');
+          // shell.openExternal(__dirname + '/test/functionalModules.xml');
+
+          $scope.functionalModules = FileHelper.parseFunctionalModulesXml(__dirname + '/test/functionalModules.xml');
+        }
+      }
 
       function getModuleByName(name) {
-        return $scope.modules.filter(mod => mod.name === name)[0];
+        return $scope.functionalModules.filter(mod => mod.name === name)[0];
       }
 
       function selectModule(module) {
@@ -29,11 +62,6 @@ angular.module('FunctionalModulesBuilder')
         selectModule(name);
       }
 
-      try {
-        $scope.modules = Workspace.getFunctionalModulesXml();
-      } catch (e) {
-        console.warn("Working directory is not set, loading test xml file");
-        $scope.modules = FileHelper.parseFunctionalModulesXml(__dirname + '/test/functionalModules.xml');
-      }
+      load();
     }
   ]);

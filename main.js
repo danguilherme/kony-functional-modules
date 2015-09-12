@@ -4,6 +4,9 @@ var BrowserWindow = require('browser-window');  // Module to create native brows
 // Report crashes to our server.
 require('crash-reporter').start();
 
+// adds debug features like hotkeys for triggering dev tools and reload
+require('electron-debug')();
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
 var mainWindow = null;

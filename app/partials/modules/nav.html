@@ -3,10 +3,41 @@
 
   <div class="list-group">
     <button
-      ng-repeat="module in modules"
+      ng-repeat="functionalModule in functionalModules"
       type="button"
       class="list-group-item"
-      ng-click="selectModule(module)"
-      ng-class="{ active: selectedModule.name == module.name }">{{module.loadOnStartup ? '&bull;' : ''}} {{module.name}}</button>
+      ng-click="selectModule(functionalModule)"
+      ng-class="{
+        active: selectedModule.name == functionalModule.name,
+        'list-group-item-success': selectedModule.dependentModules.indexOf(functionalModule.name) != -1 }">{{functionalModule.loadOnStartup ? '&bull;' : ''}} {{functionalModule.name}}</button>
+  </div>
+</nav>
+
+<nav class="scripts">
+  <h2>Scripts</h2>
+
+  <div class="list-group list-group-compact">
+    <button
+      ng-repeat="script in allScripts"
+      type="button"
+      class="list-group-item"
+      ng-click="openScriptFile(script)"
+      ng-class="{
+        'list-group-item-danger': referencedScripts.indexOf(script) == -1,
+        'list-group-item-success': selectedModule.jsModules.indexOf(script) != -1 }">{{script}}</button>
+  </div>
+</nav>
+
+<nav class="views">
+  <h2>Views</h2>
+
+  <div class="list-group list-group-compact">
+    <button
+      ng-repeat="form in allForms"
+      type="button"
+      class="list-group-item"
+      ng-class="{
+        'list-group-item-danger': referencedForms.indexOf(form) == -1,
+        'list-group-item-success': selectedModule.views.indexOf(form) != -1 }">{{form}}</button>
   </div>
 </nav>

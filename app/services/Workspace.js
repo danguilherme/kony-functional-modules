@@ -25,12 +25,23 @@ angular.module('FunctionalModulesBuilder')
       }
 
       // get all file names under modules/js
-      function listModules() {
+      function getScripts() {
         assertWorkingDirectorySet();
 
         return FileHelper.readDirectory(path.join(getWorkingDirectory(), 'modules/js'))
           // remove folders and Kony files
-          .filter(f => !!path.extname(f) && KONY_FILES.indexOf(f) === -1);
+          .filter(f => !!path.extname(f) && KONY_FILES.indexOf(f) === -1)
+          // remove file extension
+          .map(f => path.parse(f).name);
+      }
+
+      // get all file names under forms/mobile
+      function getForms() {
+        assertWorkingDirectorySet();
+
+        return FileHelper.readDirectory(path.join(getWorkingDirectory(), 'forms/mobile'))
+          // remove file extension
+          .map(f => path.parse(f).name);
       }
 
       function getFunctionalModulesXml() {
@@ -41,7 +52,8 @@ angular.module('FunctionalModulesBuilder')
 
       return {
         setWorkingDirectory: setWorkingDirectory,
-        listModules: listModules,
+        getScripts: getScripts,
+        getForms: getForms,
         getFunctionalModulesXml: getFunctionalModulesXml
       }
     }
