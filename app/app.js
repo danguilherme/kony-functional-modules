@@ -29,4 +29,8 @@ FunctionalModulesBuilder.config(function($stateProvider, $urlRouterProvider, uiS
   uiSelectConfig.theme = 'bootstrap';
   uiSelectConfig.resetSearchInput = true;
   uiSelectConfig.appendToBody = true;
+
+  Array.prototype.contains = function(item) {
+    return this.indexOf(item) != -1;
+  }
 });

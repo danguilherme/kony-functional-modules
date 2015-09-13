@@ -1,48 +1,35 @@
 <div class="row">
-  <nav class="modules col-lg-4">
+  <nav class="modules col-lg-12">
     <h2>Modules</h2>
 
     <div class="list-group">
-      <button
-        ng-repeat="functionalModule in functionalModules"
-        type="button"
-        class="list-group-item"
-        ng-click="selectModule(functionalModule)"
-        title="{{functionalModule.name}}"
-        ng-class="{
+      <button ng-repeat="functionalModule in functionalModules" type="button" class="list-group-item" ng-click="selectModule(functionalModule)" title="{{functionalModule.name}}" ng-class="{
           active: selectedModule.name == functionalModule.name,
           'list-group-item-success': selectedModule && selectedModule.dependentModules.indexOf(functionalModule.name) != -1 }">
-          <span ng-show="functionalModule.loadOnStartup" class="glyphicon glyphicon-asterisk" title="Loads on startup"></span>
-          {{functionalModule.name}}</button>
+        <span ng-show="functionalModule.loadOnStartup" class="glyphicon glyphicon-asterisk" title="Loads on startup"></span>
+        {{functionalModule.name}}</button>
     </div>
   </nav>
+</div>
 
-  <nav class="scripts col-lg-4">
-    <h2>Scripts</h2>
+
+<div class="dependencies-overview row hidden-xs">
+  <h2>Overview</h2>
+  <nav class="scripts col-lg-6">
+    <h3>Scripts</h3>
 
     <div class="list-group list-group-compact">
-      <button
-        ng-repeat="script in allScripts"
-        type="button"
-        class="list-group-item"
-        ng-click="openScriptFile(script)"
-        title="{{script}}"
-        ng-class="{
+      <button ng-repeat="script in allScripts" type="button" class="list-group-item" ng-click="openScriptFile(script)" title="{{script}}" ng-class="{
           'list-group-item-danger': referencedScripts.indexOf(script) == -1,
           'list-group-item-success': selectedModule && selectedModule.jsModules.indexOf(script) != -1 }">{{script}}</button>
     </div>
   </nav>
 
-  <nav class="views col-lg-4">
-    <h2>Views</h2>
+  <nav class="views col-lg-6">
+    <h3>Views</h3>
 
     <div class="list-group list-group-compact">
-      <button
-        ng-repeat="form in allForms"
-        type="button"
-        class="list-group-item"
-        title="{{form}}"
-        ng-class="{
+      <button ng-repeat="form in allForms" type="button" class="list-group-item" title="{{form}}" ng-class="{
           'list-group-item-danger': referencedForms.indexOf(form) == -1,
           'list-group-item-success': selectedModule && selectedModule.views.indexOf(form) != -1 }">{{form}}</button>
     </div>

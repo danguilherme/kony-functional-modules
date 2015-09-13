@@ -1,6 +1,4 @@
 <div class="module-info">
-  <h1>Module Info</h1>
-
   <div ng-show="selectedModule">
     <form>
       <div class="form-inline">
@@ -19,56 +17,86 @@
       </div>
 
       <div class="row module-load-dependencies">
-        <div class="col-sm-12 col-lg-4">
-          <div>
-            <label class="control-label">{{selectedModule.views.length}} Views</label>
-            <div class="list-group list-group-compact">
-              <button ng-repeat="view in selectedModule.views" type="button" class="list-group-item">{{view}}</button>
-            </div>
-          </div>
 
-          <ui-select ng-model="uiSelect.selectedView" ng-change="addView($select.selected)">
-            <ui-select-match placeholder="Add a view...">{{$select.selected}} added...</ui-select-match>
-            <ui-select-choices repeat="view in allForms | filter: filter_itemIsNotIn(selectedModule.views) | filter: $select.search" refresh-delay="0">
-              <div ng-bind-html="view | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+
+        <div class="scripts col-sm-6 col-md-4">
+          <h2>Scripts</h2>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="script in allScripts">
+              <button type="button" ng-click="toggleScript(script)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.jsModules.contains(script)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.jsModules.contains(script)"></span>
+              </button>
+
+              <span class="text">{{script}}</span>
+
+              <span class="glyphicon glyphicon-exclamation-sign" ng-hide="referencedScripts.contains(script)" title="Item not referenced by any module"></span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.jsModules.contains(script)" style="display: none;">
+                <button type="button" ng-click="moveScriptDown(script)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveScriptUp(script)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
         </div>
 
-        <div class="col-sm-12 col-lg-4">
-          <div>
-            <label class="control-label">{{selectedModule.jsModules.length}} JS Modules</label>
-            <div class="list-group list-group-compact">
-              <button ng-repeat="jsFileName in selectedModule.jsModules" type="button" class="list-group-item">{{jsFileName}}</button>
-            </div>
-          </div>
+        <div class="views col-sm-6 col-md-4">
+          <h2>Views</h2>
 
-          <ui-select ng-model="uiSelect.selectedScript" ng-change="addScript($select.selected)">
-            <ui-select-match placeholder="Add a JS file...">{{$select.selected}} added...</ui-select-match>
-            <ui-select-choices repeat="script in allScripts | filter: filter_itemIsNotIn(selectedModule.jsModules) | filter: $select.search" refresh-delay="0">
-              <div ng-bind-html="script | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="view in allForms">
+              <button type="button" ng-click="toggleView(view)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.views.contains(view)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.views.contains(view)"></span>
+              </button>
+
+              <span class="text">{{view}}</span>
+
+              <span class="glyphicon glyphicon-exclamation-sign" ng-hide="referencedForms.contains(view)" title="Item not referenced by any module"></span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.views.contains(view)" style="display: none;">
+                <button type="button" ng-click="moveViewDown(view)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveViewUp(view)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
         </div>
 
-        <div class="col-sm-12 col-lg-4">
-          <div>
-            <label class="control-label">{{selectedModule.dependentModules.length}} Dependencies</label>
-            <div class="list-group list-group-compact">
-              <button ng-repeat="dependentModule in selectedModule.dependentModules" type="button" class="list-group-item" ng-click="selectDependentModule(dependentModule)">{{dependentModule}}</button>
-            </div>
-          </div>
+        <div class="dependent-modules col-sm-6 col-md-4">
+          <h2>Dependent Modules</h2>
 
-          <ui-select ng-model="uiSelect.selectedModule" ng-change="addDependentModule($select.selected)">
-            <ui-select-match placeholder="Add a module...">{{$select.selected}} added...</ui-select-match>
-            <ui-select-choices repeat="module in allModules | filter: filter_itemIsNotIn(selectedModule.dependentModules, [selectedModule.name]) | filter: $select.search" refresh-delay="0">
-              <div ng-bind-html="module | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="dependentModule in allModules">
+              <button type="button" ng-click="toggleView(dependentModule)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.dependentModules.contains(dependentModule)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.dependentModules.contains(dependentModule)"></span>
+              </button>
+
+              <span class="text">{{dependentModule}}</span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.dependentModules.contains(dependentModule)" style="display: none;">
+                <button type="button" ng-click="moveViewDown(dependentModule)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveViewUp(dependentModule)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </form>
-  </div>
 
-  <pre>{{xml}}</pre>
+    <pre>{{xml}}</pre>
+  </div>
 </div>

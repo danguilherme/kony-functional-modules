@@ -3,6 +3,7 @@ body {
   margin-bottom: 2em;
   background-color: #fafafa;
 }
+
 .container-full {
   padding-top: 10%;
   background-color: transparent;
@@ -11,6 +12,27 @@ body {
 h1,
 h2 {
   text-align: center;
+}
+
+h2,
+h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  height: 2em;
+  letter-spacing: 5px;
+  font-weight: 100;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.3em;
 }
 
 .list-group-item {

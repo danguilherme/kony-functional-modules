@@ -47,6 +47,16 @@ angular.module('FunctionalModulesBuilder')
             return 1;
           return a.name > b.name;
         });
+
+        // if ($scope.selectedModule) {
+        //   $scope.allScripts.sort(function(a, b) {
+        //     if ($scope.selectedModule.jsModules.contains(a))
+        //       return -1;
+        //     else {
+        //       return a > b;
+        //     }
+        //   });
+        // }
       }
 
       function updateReferencedContents() {
@@ -89,21 +99,62 @@ angular.module('FunctionalModulesBuilder')
       }
 
       /*
-        select new items
+        manage functional modules items
        */
+
+      /**
+       * add the given item in the given array if it's unique
+       */
+      function addItem(array, item) {
+        if (!array.contains(item))
+          array.push(item);
+      }
+
+      function removeItem(array, item) {
+        if (array.contains(item)) {
+          var idx = array.indexOf(item);
+          array.splice(idx, 1);
+        }
+      }
+
+      function toggleItem(array, item) {
+        if (array.contains(item))
+          removeItem(array, item);
+        else
+          addItem(array, item);
+      }
+
       $scope.addView = function(formName) {
-        if ($scope.selectedModule.views.indexOf(formName) == -1)
-          $scope.selectedModule.views.push(formName);
+        addItem($scope.selectedModule.views, formName);
         updateReferencedContents();
       }
+      $scope.removeView = function(formName) {
+        removeItem($scope.selectedModule.views, formName);
+        updateReferencedContents();
+      }
+      $scope.toggleView = function(formName) {
+        toggleItem($scope.selectedModule.views, formName);
+        updateReferencedContents();
+      }
+
       $scope.addScript = function(scriptName) {
-        if ($scope.selectedModule.jsModules.indexOf(scriptName) == -1)
-          $scope.selectedModule.jsModules.push(scriptName);
+        addItem($scope.selectedModule.jsModules, scriptName);
         updateReferencedContents();
       }
+      $scope.removeScript = function(scriptName) {
+        removeItem($scope.selectedModule.jsModules, scriptName);
+        updateReferencedContents();
+      }
+      $scope.toggleScript = function(scriptName) {
+        toggleItem($scope.selectedModule.jsModules, scriptName);
+        updateReferencedContents();
+      }
+      
       $scope.addDependentModule = function(moduleName) {
-        if ($scope.selectedModule.dependentModules.indexOf(moduleName) == -1)
-          $scope.selectedModule.dependentModules.push(moduleName);
+        addItem($scope.selectedModule.dependentModules, moduleName);
+      }
+      $scope.removeDependentModule = function(moduleName) {
+        removeItem($scope.selectedModule.dependentModules, moduleName);
       }
 
       load();
@@ -112,7 +163,7 @@ angular.module('FunctionalModulesBuilder')
       $scope.filter_itemIsNotIn = function() {
         var flattenedArray = Array.prototype.slice.call(arguments).reduce((a, b) => (a || []).concat(b));
         return function(item) {
-          return flattenedArray && flattenedArray.indexOf(item) === -1;
+          return flattenedArray && !flattenedArray.contains(item);
         }
       }
     }
