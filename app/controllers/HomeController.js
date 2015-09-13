@@ -14,11 +14,6 @@ angular.module('FunctionalModulesBuilder')
 
         if (path) {
           Workspace.setWorkingDirectory(path);
-
-          console.log("Eclipse project path: ", path);
-          console.log("Scripts: ", Workspace.getScripts());
-          console.log("Forms: ", Workspace.getForms());
-
           $state.go('modules');
         }
       }

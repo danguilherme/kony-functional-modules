@@ -39,7 +39,19 @@ angular.module('FunctionalModulesBuilder')
         }
       }
 
+      function sortFunctionalModules() {
+        $scope.functionalModules.sort(function(a, b) {
+          if (a.loadOnStartup)
+            return -1;
+          if (b.loadOnStartup)
+            return 1;
+          return a.name > b.name;
+        });
+      }
+
       function updateReferencedContents() {
+        sortFunctionalModules();
+
         // scripts that are at least in one functional module
         $scope.referencedScripts = $scope.functionalModules
           .map(x => x.jsModules)
@@ -62,7 +74,11 @@ angular.module('FunctionalModulesBuilder')
         $scope.selectedModule = module;
       }
 
-      $scope.$watch('selectedModule', mod => mod && ($scope.xml = pd.xml(mod.toXMLNode())), true);
+      $scope.$watch('selectedModule', function(mod) {
+        if (mod)
+          $scope.xml = pd.xml(mod.toXMLNode());
+        sortFunctionalModules();
+      }, true);
 
       $scope.selectModule = function(module) {
         selectModule(module);
