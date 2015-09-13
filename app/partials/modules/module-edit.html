@@ -2,38 +2,63 @@
   <h1>Module Info</h1>
 
   <div ng-show="selectedModule">
-    <form class="form-horizontal">
-      <div class="form-group">
-        <label for="moduleName" class="col-sm-4 control-label">Name</label>
-        <div class="col-sm-8 col-lg-4">
-          <input type="text" class="form-control" id="moduleName" placeholder="Module Name" ng-model="selectedModule.name" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="col-sm-4 control-label">{{selectedModule.views.length}} Views</label>
-        <div class="col-sm-8 col-lg-4">
-          <div class="list-group list-group-compact form-control-static">
-            <button ng-repeat="view in selectedModule.views" type="button" class="list-group-item">{{view}}</button>
+    <form>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="moduleName" class="col-sm-4 control-label">Name</label>
+          <div class="col-sm-8 col-lg-4">
+            <input type="text" class="form-control" id="moduleName" placeholder="Module Name" ng-model="selectedModule.name" required>
           </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-4 control-label">{{selectedModule.jsModules.length}} JS Modules</label>
-        <div class="col-sm-8 col-lg-4">
-          <div class="list-group list-group-compact form-control-static">
-            <button ng-repeat="jsFileName in selectedModule.jsModules" type="button" class="list-group-item">{{jsFileName}}</button>
+      <div class="row module-load-dependencies">
+        <div class="col-sm-12 col-lg-4">
+          <div>
+            <label class="control-label">{{selectedModule.views.length}} Views</label>
+            <div class="list-group list-group-compact">
+              <button ng-repeat="view in selectedModule.views" type="button" class="list-group-item">{{view}}</button>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label class="col-sm-4 control-label">{{selectedModule.dependentModules.length}} Dependencies</label>
-        <div class="col-sm-8 col-lg-4">
-          <div class="list-group list-group-compact form-control-static">
-            <button ng-repeat="dependentModule in selectedModule.dependentModules" type="button" class="list-group-item" ng-click="selectDependentModule(dependentModule)">{{dependentModule}}</button>
+          <ui-select ng-model="uiSelect.selectedView" ng-change="addView($select.selected)">
+            <ui-select-match placeholder="Add a view...">{{$select.selected}} added...</ui-select-match>
+            <ui-select-choices repeat="view in allForms | filter: filter_itemIsNotIn(selectedModule.views) | filter: $select.search" refresh-delay="0">
+              <div ng-bind-html="view | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="col-sm-12 col-lg-4">
+          <div>
+            <label class="control-label">{{selectedModule.jsModules.length}} JS Modules</label>
+            <div class="list-group list-group-compact">
+              <button ng-repeat="jsFileName in selectedModule.jsModules" type="button" class="list-group-item">{{jsFileName}}</button>
+            </div>
           </div>
+
+          <ui-select ng-model="uiSelect.selectedScript" ng-change="addScript($select.selected)">
+            <ui-select-match placeholder="Add a JS file...">{{$select.selected}} added...</ui-select-match>
+            <ui-select-choices repeat="script in allScripts | filter: filter_itemIsNotIn(selectedModule.jsModules) | filter: $select.search" refresh-delay="0">
+              <div ng-bind-html="script | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="col-sm-12 col-lg-4">
+          <div>
+            <label class="control-label">{{selectedModule.dependentModules.length}} Dependencies</label>
+            <div class="list-group list-group-compact">
+              <button ng-repeat="dependentModule in selectedModule.dependentModules" type="button" class="list-group-item" ng-click="selectDependentModule(dependentModule)">{{dependentModule}}</button>
+            </div>
+          </div>
+
+          <ui-select ng-model="uiSelect.selectedModule" ng-change="addDependentModule($select.selected)">
+            <ui-select-match placeholder="Add a module...">{{$select.selected}} added...</ui-select-match>
+            <ui-select-choices repeat="module in allModules | filter: filter_itemIsNotIn(selectedModule.dependentModules, [selectedModule.name]) | filter: $select.search" refresh-delay="0">
+              <div ng-bind-html="module | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
     </form>

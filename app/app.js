@@ -1,6 +1,7 @@
-var FunctionalModulesBuilder = angular.module('FunctionalModulesBuilder', ['ui.router', 'ngStorage']);
+var FunctionalModulesBuilder = angular.module('FunctionalModulesBuilder',
+  ['ui.router', 'ngSanitize', 'ui.select', 'ngStorage']);
 
-FunctionalModulesBuilder.config(function($stateProvider, $urlRouterProvider) {
+FunctionalModulesBuilder.config(function($stateProvider, $urlRouterProvider, uiSelectConfig) {
   $urlRouterProvider.otherwise('/home');
 
   $stateProvider
@@ -24,4 +25,8 @@ FunctionalModulesBuilder.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     });
+
+  uiSelectConfig.theme = 'bootstrap';
+  uiSelectConfig.resetSearchInput = true;
+  uiSelectConfig.appendToBody = true;
 });

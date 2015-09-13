@@ -5,13 +5,14 @@
     <title>Functional Modules Builder</title>
 
     <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="node_modules/angular-ui-select/select.min.css" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
   </head>
 
   <body ng-app="FunctionalModulesBuilder">
     <h1>Functional Modules File Builder</h1>
 
-    <div class="container" ui-view></div>
+    <div class="container-fluid" ui-view></div>
 
     <footer>
       io.js <script>document.write(process.version)</script> |
@@ -24,6 +25,8 @@
     <!-- ANGULAR MODULES -->
     <script src="node_modules/angular-ui-router/build/angular-ui-router.js"></script>
     <script src="node_modules/ngstorage/ngStorage.js"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="node_modules/angular-ui-select/select.min.js"></script>
 
     <!-- APP -->
     <script src="app/app.js"></script>
