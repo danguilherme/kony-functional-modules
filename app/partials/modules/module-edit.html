@@ -3,11 +3,17 @@
 
   <div ng-show="selectedModule">
     <form>
-      <div class="form-horizontal">
+      <div class="form-inline">
         <div class="form-group">
-          <label for="moduleName" class="col-sm-4 control-label">Name</label>
-          <div class="col-sm-8 col-lg-4">
-            <input type="text" class="form-control" id="moduleName" placeholder="Module Name" ng-model="selectedModule.name" required>
+          <label for="moduleName" class="sr-only control-label">Module Name</label>
+          <input type="text" class="form-control" id="moduleName" placeholder="Module Name" ng-model="selectedModule.name" required>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="selectedModule.loadOnStartup"> Load on Startup
+            </label>
           </div>
         </div>
       </div>

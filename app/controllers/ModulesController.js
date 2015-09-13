@@ -60,8 +60,9 @@ angular.module('FunctionalModulesBuilder')
           module = getModuleByName(module);
 
         $scope.selectedModule = module;
-        $scope.xml = pd.xml($scope.selectedModule.toXMLNode());
       }
+
+      $scope.$watch('selectedModule', mod => mod && ($scope.xml = pd.xml(mod.toXMLNode())), true);
 
       $scope.selectModule = function(module) {
         selectModule(module);

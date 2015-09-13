@@ -11,7 +11,9 @@
         title="{{functionalModule.name}}"
         ng-class="{
           active: selectedModule.name == functionalModule.name,
-          'list-group-item-success': selectedModule && selectedModule.dependentModules.indexOf(functionalModule.name) != -1 }">{{functionalModule.loadOnStartup ? '&bull;' : ''}} {{functionalModule.name}}</button>
+          'list-group-item-success': selectedModule && selectedModule.dependentModules.indexOf(functionalModule.name) != -1 }">
+          <span ng-show="functionalModule.loadOnStartup" class="glyphicon glyphicon-asterisk" title="Loads on startup"></span>
+          {{functionalModule.name}}</button>
     </div>
   </nav>
 
