@@ -1,0 +1,118 @@
+<div class="module-info">
+  <div ng-show="selectedModule">
+    <form>
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="moduleName" class="sr-only control-label">Module Name</label>
+          <input type="text" class="form-control" id="moduleName" placeholder="Module Name" ng-model="selectedModule.name" required>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="selectedModule.loadOnStartup"> Load on Startup
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row module-load-dependencies">
+
+
+        <div class="scripts col-sm-6 col-md-4">
+          <h2>Scripts</h2>
+
+          <div class="form-group">
+            <label for="searchScripts" class="sr-only control-label">Filter</label>
+            <input id="searchScripts" type="search" class="form-control" ng-model="filter.script" placeholder="Filter scripts...">
+          </div>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="script in allScripts | filter: filter.script">
+              <button type="button" ng-click="toggleScript(script)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.jsModules.contains(script)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.jsModules.contains(script)"></span>
+              </button>
+
+              <span class="text">{{script}}</span>
+
+              <span class="glyphicon glyphicon-exclamation-sign" ng-hide="referencedScripts.contains(script)" title="Item not referenced by any module"></span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.jsModules.contains(script)" style="display: none;">
+                <button type="button" ng-click="moveScriptDown(script)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveScriptUp(script)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="views col-sm-6 col-md-4">
+          <h2>Views</h2>
+
+          <div class="form-group">
+            <label for="searchViews" class="sr-only control-label">Filter</label>
+            <input id="searchViews" type="search" class="form-control" ng-model="filter.view" placeholder="Filter views...">
+          </div>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="view in allForms | filter: filter.view">
+              <button type="button" ng-click="toggleView(view)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.views.contains(view)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.views.contains(view)"></span>
+              </button>
+
+              <span class="text">{{view}}</span>
+
+              <span class="glyphicon glyphicon-exclamation-sign" ng-hide="referencedForms.contains(view)" title="Item not referenced by any module"></span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.views.contains(view)" style="display: none;">
+                <button type="button" ng-click="moveViewDown(view)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveViewUp(view)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="dependent-modules col-sm-6 col-md-4">
+          <h2>Dependent Modules</h2>
+
+          <div class="form-group">
+            <label for="searchDepModules" class="sr-only control-label">Filter</label>
+            <input id="searchDepModules" type="search" class="form-control" ng-model="filter.dependentModule" placeholder="Filter dependent modules...">
+          </div>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="dependentModule in allModules | filter: filter.dependentModule | filter: filter_itemIsNotIn([selectedModule.name])">
+              <button type="button" ng-click="toggleDependentModule(dependentModule)" class="btn btn-default">
+                <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.dependentModules.contains(dependentModule)"></span>
+                <span class="glyphicon glyphicon-check" ng-show="selectedModule.dependentModules.contains(dependentModule)"></span>
+              </button>
+
+              <span class="text">{{dependentModule}}</span>
+
+              <span class="order-change-controls btn-group" ng-show="selectedModule.dependentModules.contains(dependentModule)" style="display: none;">
+                <button type="button" ng-click="moveDependentModuleDown(dependentModule)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" ng-click="moveDependentModuleUp(dependentModule)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+    <div hljs source="xml"></div>
+  </div>
+</div>
