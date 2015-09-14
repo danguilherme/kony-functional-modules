@@ -1,6 +1,9 @@
 angular.module('FunctionalModulesBuilder')
   .factory('FileHelper', [function FileHelper() {
     var fs = require('fs');
+    var xmldom = require('xmldom');
+    var DOMParser = xmldom.DOMParser;
+    var XMLSerializer = xmldom.XMLSerializer;
 
     var remote = require('remote');
     var dialog = remote.require('dialog');
@@ -65,16 +68,25 @@ angular.module('FunctionalModulesBuilder')
      * @param  {String} location The location of the file in the file system
      * @return {FunctionalModule[]}          Array of JS objects representing module definitions
      */
-    function parseFunctionalModulesXml(location) {
+    function parseFunctionalModulesXmlToObject(location) {
       var FunctionalModule = require('./FunctionalModule');
-      var DOMParser = require('xmldom').DOMParser;
 
       var content = readFile(location, 'utf8');
-      
+
       var doc = new DOMParser().parseFromString(content, 'text/xml');
       var functionalModules = FunctionalModule.loadModules(doc.documentElement);
 
       return functionalModules;
+    }
+
+    function parseFunctionalModuleObjectsToXml(modules) {
+      var dom = new DOMParser().parseFromString('<functionalModules/>');
+      var doc = dom.documentElement;
+      for (var i = 0; i < modules.length; i++) {
+        doc.appendChild(modules[i].toXMLNode());
+      }
+      var xmlString = new XMLSerializer().serializeToString(doc);
+      return xmlString;
     }
 
     return {
@@ -83,7 +95,8 @@ angular.module('FunctionalModulesBuilder')
       readDirectory: readDirectory,
       readFile: readFile,
 
-      parseFunctionalModulesXml: parseFunctionalModulesXml,
+      parseFunctionalModulesXmlToObject: parseFunctionalModulesXmlToObject,
+      parseFunctionalModuleObjectsToXml: parseFunctionalModuleObjectsToXml,
 
       chooseEclipseProjectFolder: chooseEclipseProjectFolder,
 

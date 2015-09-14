@@ -46,15 +46,45 @@ angular.module('FunctionalModulesBuilder')
 
       function getFunctionalModulesXml() {
         assertWorkingDirectorySet();
-        // console.log(path.join(getWorkingDirectory(), FUNCTIONAL_MODULES_XML_PATH));
-        return FileHelper.parseFunctionalModulesXml(path.join(getWorkingDirectory(), FUNCTIONAL_MODULES_XML_PATH));
+        return FileHelper.parseFunctionalModulesXmlToObject(path.join(getWorkingDirectory(), FUNCTIONAL_MODULES_XML_PATH));
+      }
+
+      function saveFunctionalModulesToXml(modules) {
+        assertWorkingDirectorySet();
+        var pd = require('pretty-data').pd;
+
+        var xmlStr = FileHelper.parseFunctionalModuleObjectsToXml(modules);
+        fs.writeFile(
+          path.join(getWorkingDirectory(), FUNCTIONAL_MODULES_XML_PATH),
+          pd.xml(xmlStr),
+          function(err) {
+            if (err) {
+              return console.log(err);
+            }
+
+
+
+            var remote = require('remote');
+            var dialog = remote.require('dialog');
+            dialog.showMessageBox(remote.getCurrentWindow(), {
+              type: 'info',
+              title: "Success",
+              message: "File saved successfully",
+              buttons: ["OK"]
+            });
+            console.log("The file was saved!");
+          });
       }
 
       return {
         setWorkingDirectory: setWorkingDirectory,
+        getWorkingDirectory: getWorkingDirectory,
+
         getScripts: getScripts,
         getForms: getForms,
-        getFunctionalModulesXml: getFunctionalModulesXml
+        getFunctionalModulesXml: getFunctionalModulesXml,
+
+        saveFunctionalModulesToXml: saveFunctionalModulesToXml
       }
     }
   ]);

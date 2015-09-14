@@ -5,7 +5,7 @@ var BrowserWindow = require('browser-window');  // Module to create native brows
 require('crash-reporter').start();
 
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+// require('electron-debug')();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
@@ -30,7 +30,7 @@ app.on('ready', function() {
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Open the devtools.
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

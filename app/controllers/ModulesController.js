@@ -10,6 +10,7 @@ angular.module('FunctionalModulesBuilder')
 
       $scope.functionalModules;
       $scope.selectedModule;
+      $scope.cwd = Workspace.getWorkingDirectory();
 
       // changes while user picks stuff
       $scope.functionalModules = Workspace.getFunctionalModulesXml();
@@ -105,13 +106,8 @@ angular.module('FunctionalModulesBuilder')
       }
 
       $scope.save = function() {
-        var dom = new DOMParser().parseFromString('<functionalModules/>');
-        var doc = dom.documentElement;
-        for (var i = 0; i < $scope.functionalModules.length; i++) {
-          doc.appendChild($scope.functionalModules[i].toXMLNode());
-        }
-        var xmlString = new xmldom.XMLSerializer().serializeToString(doc);
-        console.log(pd.xml(xmlString));
+        // TODO: show a modal with the XML code to confirm the changes
+        Workspace.saveFunctionalModulesToXml($scope.functionalModules);
       }
 
       /*

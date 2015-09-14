@@ -3,9 +3,16 @@
     <div class="col-sm-3 col-lg-4" ui-view="nav"></div>
 
     <div class="col-sm-9 col-lg-8" ui-view="moduleEdit"></div>
-
   </div>
-  <button type="button" class="btn btn-primary btn-block" ng-click="save()">Save</button>
+
+  <button type="button" class="btn btn-primary btn-block" ng-click="save()">
+    Save
+    <br>
+    <small>({{cwd}})</small>
+  </button>
+
+  <hr>
+
   <div class="panel panel-info">
     <div class="panel-heading">
       Functional Modules Help
