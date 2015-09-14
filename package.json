@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=0.31.1"
+    "build": "electron-packager . FunctionalModules --out=dist --ignore='^/dist$' --prune --asar --all --version=0.32.1"
   },
   "keywords": [
     "kony",
     "functional-module",
     "mobile-development"
   ],
+  "repository": "danguilherme/kony-functional-modules",
   "author": "danguilherme",
   "license": "MIT",
   "devDependencies": {
