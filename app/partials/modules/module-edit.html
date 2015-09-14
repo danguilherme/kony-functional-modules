@@ -22,8 +22,13 @@
         <div class="scripts col-sm-6 col-md-4">
           <h2>Scripts</h2>
 
+          <div class="form-group">
+            <label for="searchScripts" class="sr-only control-label">Filter</label>
+            <input id="searchScripts" type="search" class="form-control" ng-model="filter.script" placeholder="Filter scripts...">
+          </div>
+
           <ul class="list-group">
-            <li class="list-group-item" ng-repeat="script in allScripts">
+            <li class="list-group-item" ng-repeat="script in allScripts | filter: filter.script">
               <button type="button" ng-click="toggleScript(script)" class="btn btn-default">
                 <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.jsModules.contains(script)"></span>
                 <span class="glyphicon glyphicon-check" ng-show="selectedModule.jsModules.contains(script)"></span>
@@ -48,8 +53,13 @@
         <div class="views col-sm-6 col-md-4">
           <h2>Views</h2>
 
+          <div class="form-group">
+            <label for="searchViews" class="sr-only control-label">Filter</label>
+            <input id="searchViews" type="search" class="form-control" ng-model="filter.view" placeholder="Filter views...">
+          </div>
+
           <ul class="list-group">
-            <li class="list-group-item" ng-repeat="view in allForms">
+            <li class="list-group-item" ng-repeat="view in allForms | filter: filter.view">
               <button type="button" ng-click="toggleView(view)" class="btn btn-default">
                 <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.views.contains(view)"></span>
                 <span class="glyphicon glyphicon-check" ng-show="selectedModule.views.contains(view)"></span>
@@ -74,8 +84,13 @@
         <div class="dependent-modules col-sm-6 col-md-4">
           <h2>Dependent Modules</h2>
 
+          <div class="form-group">
+            <label for="searchDepModules" class="sr-only control-label">Filter</label>
+            <input id="searchDepModules" type="search" class="form-control" ng-model="filter.dependentModule" placeholder="Filter dependent modules...">
+          </div>
+
           <ul class="list-group">
-            <li class="list-group-item" ng-repeat="dependentModule in allModules | filter: filter_itemIsNotIn([selectedModule.name])">
+            <li class="list-group-item" ng-repeat="dependentModule in allModules | filter: filter.dependentModule | filter: filter_itemIsNotIn([selectedModule.name])">
               <button type="button" ng-click="toggleDependentModule(dependentModule)" class="btn btn-default">
                 <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.dependentModules.contains(dependentModule)"></span>
                 <span class="glyphicon glyphicon-check" ng-show="selectedModule.dependentModules.contains(dependentModule)"></span>

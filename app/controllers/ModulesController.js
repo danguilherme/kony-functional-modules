@@ -8,15 +8,17 @@ angular.module('FunctionalModulesBuilder')
       var xmldom = require('xmldom');
       var DOMParser = xmldom.DOMParser;
 
-      $scope.uiSelect = {
-        selectedItem: null
-      };
-
       $scope.functionalModules;
       $scope.selectedModule;
 
       // changes while user picks stuff
       $scope.functionalModules = Workspace.getFunctionalModulesXml();
+
+      $scope.filter = {
+        view: "",
+        script: "",
+        dependentModule: ""
+      };
 
       function load() {
         try {
