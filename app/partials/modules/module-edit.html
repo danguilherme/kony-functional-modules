@@ -75,8 +75,8 @@
           <h2>Dependent Modules</h2>
 
           <ul class="list-group">
-            <li class="list-group-item" ng-repeat="dependentModule in allModules">
-              <button type="button" ng-click="toggleView(dependentModule)" class="btn btn-default">
+            <li class="list-group-item" ng-repeat="dependentModule in allModules | filter: filter_itemIsNotIn([selectedModule.name])">
+              <button type="button" ng-click="toggleDependentModule(dependentModule)" class="btn btn-default">
                 <span class="glyphicon glyphicon-unchecked" ng-hide="selectedModule.dependentModules.contains(dependentModule)"></span>
                 <span class="glyphicon glyphicon-check" ng-show="selectedModule.dependentModules.contains(dependentModule)"></span>
               </button>
@@ -84,10 +84,10 @@
               <span class="text">{{dependentModule}}</span>
 
               <span class="order-change-controls btn-group" ng-show="selectedModule.dependentModules.contains(dependentModule)" style="display: none;">
-                <button type="button" ng-click="moveViewDown(dependentModule)" class="btn btn-default">
+                <button type="button" ng-click="moveDependentModuleDown(dependentModule)" class="btn btn-default">
                   <span class="glyphicon glyphicon-arrow-down"></span>
                 </button>
-                <button type="button" ng-click="moveViewUp(dependentModule)" class="btn btn-default">
+                <button type="button" ng-click="moveDependentModuleUp(dependentModule)" class="btn btn-default">
                   <span class="glyphicon glyphicon-arrow-up"></span>
                 </button>
               </span>

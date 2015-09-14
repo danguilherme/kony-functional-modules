@@ -5,6 +5,8 @@ angular.module('FunctionalModulesBuilder')
     function ModulesController($scope, FileHelper, Workspace) {
       // TODO: Check CodeMirror
       var pd = require('pretty-data').pd;
+      var xmldom = require('xmldom');
+      var DOMParser = xmldom.DOMParser;
 
       $scope.uiSelect = {
         selectedItem: null
@@ -48,6 +50,8 @@ angular.module('FunctionalModulesBuilder')
           return a.name > b.name;
         });
 
+        $scope.allModules.sort();
+
         // if ($scope.selectedModule) {
         //   $scope.allScripts.sort(function(a, b) {
         //     if ($scope.selectedModule.jsModules.contains(a))
@@ -86,7 +90,7 @@ angular.module('FunctionalModulesBuilder')
 
       $scope.$watch('selectedModule', function(mod) {
         if (mod)
-          $scope.xml = pd.xml(mod.toXMLNode());
+          $scope.xml = pd.xml(new xmldom.XMLSerializer().serializeToString(mod.toXMLNode()));
         sortFunctionalModules();
       }, true);
 
@@ -96,6 +100,16 @@ angular.module('FunctionalModulesBuilder')
 
       $scope.selectDependentModule = function(name) {
         selectModule(name);
+      }
+
+      $scope.save = function() {
+        var dom = new DOMParser().parseFromString('<functionalModules/>');
+        var doc = dom.documentElement;
+        for (var i = 0; i < $scope.functionalModules.length; i++) {
+          doc.appendChild($scope.functionalModules[i].toXMLNode());
+        }
+        var xmlString = new xmldom.XMLSerializer().serializeToString(doc);
+        console.log(pd.xml(xmlString));
       }
 
       /*
@@ -149,12 +163,15 @@ angular.module('FunctionalModulesBuilder')
         toggleItem($scope.selectedModule.jsModules, scriptName);
         updateReferencedContents();
       }
-      
+
       $scope.addDependentModule = function(moduleName) {
         addItem($scope.selectedModule.dependentModules, moduleName);
       }
       $scope.removeDependentModule = function(moduleName) {
         removeItem($scope.selectedModule.dependentModules, moduleName);
+      }
+      $scope.toggleDependentModule = function(moduleName) {
+        toggleItem($scope.selectedModule.dependentModules, moduleName);
       }
 
       load();

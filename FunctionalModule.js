@@ -22,7 +22,7 @@ FunctionalModule.loadModules = function loadModulesFromXmlDocument(documentEleme
 }
 
 FunctionalModule.loadModule = function loadModuleFromXmlElement(xmlElement) {
-  if (xmlElement.nodeName != 'functionalModule') 
+  if (xmlElement.nodeName != 'functionalModule')
     throw "XML node is not from a functional module";
 
   var getIdentifierList = (tagName) => {
@@ -63,7 +63,7 @@ FunctionalModule.prototype.toXMLNode = function() {
   appendIdentifierListNode(this.views, 'views');
   appendIdentifierListNode(this.dependentModules, 'dependentModules');
 
-  return new xmldom.XMLSerializer().serializeToString(doc);
+  return doc;
 };
 
 FunctionalModule.prototype.toString = function() {

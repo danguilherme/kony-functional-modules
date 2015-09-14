@@ -6,4 +6,20 @@
 
   </div>
   <button type="button" class="btn btn-primary btn-block" ng-click="save()">Save</button>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      Functional Modules Help
+    </div>
+    <div class="panel-body">
+      <dl>
+        <dt>views</dt>
+        <dd>List of ids of forms, popups, templates (seg, datagrid, header, footer... etc)</dd>
+        <dt>jsModules</dt>
+        <dd>JS modules required for the functional module</dd>
+        <dt>dependentModules</dt>
+        <dd>Other functional modules required for this module</dd>
+      </dl>
+      All of these dependencies are optional, but at least one of forms or JS modules should be provided for a functional module.
+    </div>
+  </div>
 </main>
