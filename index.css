@@ -35,6 +35,10 @@ h3 {
   font-size: 1.3em;
 }
 
+.hljs {
+  background-color: inherit;
+}
+
 .list-group-item {
   overflow: hidden;
   text-overflow: ellipsis;
