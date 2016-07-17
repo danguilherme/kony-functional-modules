@@ -18,7 +18,7 @@ Either forms or modules should be provided for a module.
 
     <functionalModule name="comics">
     	<views>tmplComics,frmComics</views>
-      <jsModules>frmComicsView</jsModules>
+      <jsModules></jsModules>
     </functionalModule>
 
     <functionalModule name="characters">
